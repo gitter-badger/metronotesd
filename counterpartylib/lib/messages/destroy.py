@@ -4,11 +4,11 @@
 
 import struct
 
-from counterpartylib.lib import util
-from counterpartylib.lib import config
-from counterpartylib.lib import script
-from counterpartylib.lib.script import AddressError
-from counterpartylib.lib.exceptions import *
+from metronoteslib.lib import util
+from metronoteslib.lib import config
+from metronoteslib.lib import script
+from metronoteslib.lib.script import AddressError
+from metronoteslib.lib.exceptions import *
 
 FORMAT = '>QQ8s'
 LENGTH = 8 + 8 + 8

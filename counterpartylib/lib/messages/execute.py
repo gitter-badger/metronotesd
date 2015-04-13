@@ -7,7 +7,7 @@ import binascii
 import logging
 logger = logging.getLogger(__name__)
 
-from counterpartylib.lib import (util, config, exceptions)
+from metronoteslib.lib import (util, config, exceptions)
 from .scriptlib import (utils, blocks, processblock)
 
 FORMAT = '>20sQQQ'

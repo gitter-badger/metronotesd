@@ -5,7 +5,7 @@
 import struct
 import binascii
 
-from counterpartylib.lib import (config, exceptions, util)
+from metronoteslib.lib import (config, exceptions, util)
 from . import execute
 
 FORMAT = '>QQQ'

@@ -16,7 +16,7 @@ import appdirs
 import platform
 from urllib.parse import quote_plus as urlencode
 
-from counterpartylib.lib import api, config, util, exceptions, blocks, check, backend, database, transaction, script, log
+from metronoteslib.lib import api, config, util, exceptions, blocks, check, backend, database, transaction, script, log
 
 D = decimal.Decimal
 
@@ -82,7 +82,7 @@ def initialise(database_file=None, log_file=None, api_log_file=None,
                 force=False, verbose=False):
 
      # Data directory
-    data_dir = appdirs.user_data_dir(appauthor=config.XCP_NAME, appname=config.APP_NAME, roaming=True)
+    data_dir = appdirs.user_data_dir(appauthor=config.XMN_NAME, appname=config.APP_NAME, roaming=True)
     if not os.path.isdir(data_dir):
         os.makedirs(data_dir, mode=0o755)
 
@@ -112,7 +112,7 @@ def initialise(database_file=None, log_file=None, api_log_file=None,
         config.DATABASE = os.path.join(data_dir, filename)
 
     # Log directory
-    log_dir = appdirs.user_log_dir(appauthor=config.XCP_NAME, appname=config.APP_NAME)
+    log_dir = appdirs.user_log_dir(appauthor=config.XMN_NAME, appname=config.APP_NAME)
     if not os.path.isdir(log_dir):
         os.makedirs(log_dir, mode=0o755)
 
@@ -204,13 +204,13 @@ def initialise(database_file=None, log_file=None, api_log_file=None,
     ##############
     # THINGS WE SERVE
 
-    # counterpartyd API RPC host
+    # metronotesd API RPC host
     if rpc_host:
         config.RPC_HOST = rpc_host
     else:
         config.RPC_HOST = 'localhost'
 
-    # counterpartyd API RPC port
+    # metronotesd API RPC port
     if rpc_port:
         config.RPC_PORT = rpc_port
     else:
@@ -227,17 +227,17 @@ def initialise(database_file=None, log_file=None, api_log_file=None,
     try:
         config.RPC_PORT = int(config.RPC_PORT)
         if not (int(config.RPC_PORT) > 1 and int(config.RPC_PORT) < 65535):
-            raise ConfigurationError('invalid counterpartyd API port number')
+            raise ConfigurationError('invalid metronotesd API port number')
     except:
         raise ConfigurationError("Please specific a valid port number rpc-port configuration parameter")
 
-    #  counterpartyd API RPC user
+    #  metronotesd API RPC user
     if rpc_user:
         config.RPC_USER = rpc_user
     else:
         config.RPC_USER = 'rpc'
 
-    #  counterpartyd API RPC password
+    #  metronotesd API RPC password
     if rpc_password:
         config.RPC_PASSWORD = rpc_password
     else:
@@ -304,7 +304,7 @@ def initialise(database_file=None, log_file=None, api_log_file=None,
         logger.error("Unhandled Exception", exc_info=(exc_type, exc_value, exc_traceback))
     sys.excepthook = handle_exception
 
-    logger.info('Running v{} of counterparty-lib.'.format(config.VERSION_STRING))
+    logger.info('Running v{} of metronotes-lib.'.format(config.VERSION_STRING))
 
     if config.FORCE:
         logger.warning('THE OPTION `--force` IS NOT FOR USE ON PRODUCTION SYSTEMS.')

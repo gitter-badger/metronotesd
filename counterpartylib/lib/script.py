@@ -10,9 +10,9 @@ import binascii
 
 from bitcoin.core.key import CPubKey
 
-from counterpartylib.lib import util
-from counterpartylib.lib import config
-from counterpartylib.lib import exceptions
+from metronoteslib.lib import util
+from metronoteslib.lib import config
+from metronoteslib.lib import exceptions
 
 b58_digits = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 

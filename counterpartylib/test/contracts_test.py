@@ -1,5 +1,5 @@
 """
-This module test for counterpartyd compability with Ethereum's Smart Contracts.
+This module test for metronotesd compability with Ethereum's Smart Contracts.
 """
 
 """
@@ -28,11 +28,11 @@ gasprice = 0
 startgas = 10000
 """
 
-### Counterparty compatibility ###
+### Metronotes compatibility ###
 import server
-from counterpartylib.lib import (util, config, database)
-from counterpartylib.lib.messages import execute
-from counterpartylib.lib.messages.scriptlib import (blocks, rlp, processblock)
+from metronoteslib.lib import (util, config, database)
+from metronoteslib.lib.messages import execute
+from metronoteslib.lib.messages.scriptlib import (blocks, rlp, processblock)
 
 import subprocess   # Serpent is Python 3‐incompatible.
 import binascii
@@ -109,7 +109,7 @@ class tester(object):
             if not sender:
                 sender = '82a978b3f5962a5b0957d9ee9eef472ee55b42f1' # PyEthereum uses ECDSA to derive this string from `sender = 0`.
 
-            util.credit(db, sender, config.XCP, max(endowment*2, 100000000), action='unit test', event='facefeed')
+            util.credit(db, sender, config.XMN, max(endowment*2, 100000000), action='unit test', event='facefeed')
 
             success, data = tester.state.do_send(self, sender, '', endowment, data=code)
             contract_id = data
@@ -175,7 +175,7 @@ class tester(object):
 
             # Execute contract.
             # print('qux', data, type(data))
-            util.credit(db, sender, config.XCP, value + 100000000, action='unit test', event='facefeed')
+            util.credit(db, sender, config.XMN, value + 100000000, action='unit test', event='facefeed')
             success, output = tester.state.do_send(self, sender, to, value, data=data)
             if output:
                 return rlp.decode_datalist(bytes(output))
@@ -210,7 +210,7 @@ tester.a2 = 'dceceaf3fc5c0a63d195d69b1a90011b7b19650d'
 tester.a3 = '598443f1880ef585b21f1d7585bd0577402861e5'
 
 def setup_function(function):
-    server.initialise(database_file=tempfile.gettempdir()+'/counterpartyd.unittest.db', 
+    server.initialise(database_file=tempfile.gettempdir()+'/metronotesd.unittest.db', 
                       rpc_port=9999, rpc_password='pass', 
                       backend_password='pass',
                       testnet=True, testcoin=False)
@@ -222,7 +222,7 @@ def setup_function(function):
     # Connect to database.
     global db
     db = database.get_connection(read_only=False, foreign_keys=False)
-    from counterpartylib.lib import blocks
+    from metronoteslib.lib import blocks
     blocks.initialise(db)
 
 def teardown_function(function):
@@ -230,7 +230,7 @@ def teardown_function(function):
     del db
     os.remove(config.DATABASE)
 
-### Counterparty compatibility ###
+### Metronotes compatibility ###
 
 
 # Test EVM contracts

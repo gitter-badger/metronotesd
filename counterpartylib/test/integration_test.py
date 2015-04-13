@@ -5,7 +5,7 @@ import pytest
 import util_test
 from util_test import CURR_DIR
 import server
-from counterpartylib.lib import (config, check, database)
+from metronoteslib.lib import (config, check, database)
 
 def test_scenario(scenario_name, base_scenario_name, transactions, rawtransactions_db):
     """Run the integration tests.

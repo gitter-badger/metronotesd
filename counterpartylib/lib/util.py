@@ -18,9 +18,9 @@ import sha3
 import bitcoin as bitcoinlib
 import os
 
-from counterpartylib.lib import exceptions
-from counterpartylib.lib.exceptions import DecodeError
-from counterpartylib.lib import config
+from metronoteslib.lib import exceptions
+from metronoteslib.lib.exceptions import DecodeError
+from metronoteslib.lib import config
 
 D = decimal.Decimal
 b26_digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -54,7 +54,7 @@ def api(method, params):
     }
     response = requests.post(config.RPC, data=json.dumps(payload), headers=headers)
     if response == None:
-        raise RPCError('Cannot communicate with {} server.'.format(config.XCP_NAME))
+        raise RPCError('Cannot communicate with {} server.'.format(config.XMN_NAME))
     elif response.status_code != 200:
         if response.status_code == 500:
             raise RPCError('Malformed API call.')
@@ -113,7 +113,7 @@ def last_message(db):
 def generate_asset_id(asset_name, block_index):
     """Create asset_id from asset_name."""
     if asset_name == config.BTC: return 0
-    elif asset_name == config.XCP: return 1
+    elif asset_name == config.XMN: return 1
 
     if len(asset_name) < 4:
         raise exceptions.AssetNameError('too short')
@@ -155,7 +155,7 @@ def generate_asset_id(asset_name, block_index):
 def generate_asset_name (asset_id, block_index):
     """Create asset_name from asset_id."""
     if asset_id == 0: return config.BTC
-    elif asset_id == 1: return config.XCP
+    elif asset_id == 1: return config.XMN
 
     if asset_id < 26**3:
         raise exceptions.AssetIDError('too low')
@@ -221,13 +221,13 @@ def debit (db, address, asset, quantity, action=None, event=None):
 
     debit_cursor = db.cursor()
 
-    # Contracts can only hold XCP balances.
-    if enabled('contracts_only_xcp_balances'): # Protocol change.
+    # Contracts can only hold XMN balances.
+    if enabled('contracts_only_xmn_balances'): # Protocol change.
         if len(address) == 40:
-            assert asset == config.XCP
+            assert asset == config.XMN
 
     if asset == config.BTC:
-        raise exceptions.BalanceError('Cannot debit bitcoins from a {} address!'.format(config.XCP_NAME))
+        raise exceptions.BalanceError('Cannot debit bitcoins from a {} address!'.format(config.XMN_NAME))
 
     debit_cursor.execute('''SELECT * FROM balances \
                             WHERE (address = ? AND asset = ?)''', (address, asset))
@@ -279,10 +279,10 @@ def credit (db, address, asset, quantity, action=None, event=None):
 
     credit_cursor = db.cursor()
 
-    # Contracts can only hold XCP balances.
-    if enabled('contracts_only_xcp_balances'): # Protocol change.
+    # Contracts can only hold XMN balances.
+    if enabled('contracts_only_xmn_balances'): # Protocol change.
         if len(address) == 40:
-            assert asset == config.XCP
+            assert asset == config.XMN
 
     credit_cursor.execute('''SELECT * FROM balances \
                              WHERE (address = ? AND asset = ?)''', (address, asset))
@@ -333,7 +333,7 @@ class QuantityError(Exception): pass
 
 def is_divisible(db, asset):
     """Check if the asset is divisible."""
-    if asset in (config.BTC, config.XCP):
+    if asset in (config.BTC, config.XMN):
         return True
     else:
         cursor = db.cursor()
@@ -425,8 +425,8 @@ def holders(db, asset):
     for order_match in list(cursor):
         holders.append({'address': order_match['tx1_address'], 'address_quantity': order_match['backward_quantity'], 'escrow': order_match['id']})
 
-    # Bets and RPS (and bet/rps matches) only escrow XCP.
-    if asset == config.XCP:
+    # Bets and RPS (and bet/rps matches) only escrow XMN.
+    if asset == config.XMN:
         cursor.execute('''SELECT * FROM bets \
                           WHERE status = ?''', ('open',))
         for bet in list(cursor):
@@ -451,7 +451,7 @@ def holders(db, asset):
         for execution in list(cursor):
             holders.append({'address': execution['source'], 'address_quantity': execution['gas_cost'], 'escrow': None})
 
-        # XCP escrowed for not finished executions
+        # XMN escrowed for not finished executions
         cursor.execute('''SELECT * FROM executions WHERE status = ?''', ('out of gas',))
         for execution in list(cursor):
             holders.append({'address': execution['source'], 'address_quantity': execution['gas_remained'], 'escrow': execution['contract_id']})
@@ -459,8 +459,8 @@ def holders(db, asset):
     cursor.close()
     return holders
 
-def xcp_created (db):
-    """Return number of XCP created thus far."""
+def xmn_created (db):
+    """Return number of XMN created thus far."""
     cursor = db.cursor()
     cursor.execute('''SELECT SUM(earned) AS total FROM burns \
                       WHERE (status = ?)''', ('valid',))
@@ -468,12 +468,12 @@ def xcp_created (db):
     cursor.close()
     return total
 
-def xcp_destroyed (db):
-    """Return number of XCP destroyed thus far."""
+def xmn_destroyed (db):
+    """Return number of XMN destroyed thus far."""
     cursor = db.cursor()
     # Destructions
     cursor.execute('''SELECT SUM(quantity) AS total FROM destructions \
-                      WHERE (status = ? AND asset = ?)''', ('valid', config.XCP))
+                      WHERE (status = ? AND asset = ?)''', ('valid', config.XMN))
     destroyed_total = list(cursor)[0]['total'] or 0
     # Subtract issuance fees.
     cursor.execute('''SELECT SUM(fee_paid) AS total FROM issuances\
@@ -486,14 +486,14 @@ def xcp_destroyed (db):
     cursor.close()
     return destroyed_total + issuance_fee_total + dividend_fee_total
 
-def xcp_supply (db):
-    """Return the XCP supply."""
-    return xcp_created(db) - xcp_destroyed(db)
+def xmn_supply (db):
+    """Return the XMN supply."""
+    return xmn_created(db) - xmn_destroyed(db)
 
 def creations (db):
     """Return creations."""
     cursor = db.cursor()
-    creations = {config.XCP: xcp_created(db)}
+    creations = {config.XMN: xmn_created(db)}
     cursor.execute('''SELECT * from issuances \
                       WHERE status = ?''', ('valid',))
     for issuance in list(cursor):
@@ -510,9 +510,9 @@ def creations (db):
 def destructions (db):
     """Return destructions."""
     cursor = db.cursor()
-    destructions = {config.XCP: xcp_destroyed(db)}
+    destructions = {config.XMN: xmn_destroyed(db)}
     cursor.execute('''SELECT * from destructions \
-                      WHERE (status = ? AND asset != ?)''', ('valid', config.XCP))
+                      WHERE (status = ? AND asset != ?)''', ('valid', config.XMN))
     for destruction in list(cursor):
         asset = destruction['asset']
         quantity = destruction['burned']

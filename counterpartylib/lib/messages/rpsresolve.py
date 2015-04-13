@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 import string
 
-from counterpartylib.lib import (config, exceptions, util)
+from metronoteslib.lib import (config, exceptions, util)
 from . import rps
 
 # move random rps_match_id

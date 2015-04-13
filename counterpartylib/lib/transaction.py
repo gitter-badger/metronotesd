@@ -1,6 +1,6 @@
 """
 Construct, serialize, sign and broadcast the Bitcoin transactions that are
-Counterparty transactions.
+Metronotes transactions.
 
 This module contains no consensus‐critical code.
 """
@@ -23,11 +23,11 @@ from bitcoin.core.script import CScript
 from bitcoin.core import x
 from bitcoin.core import b2lx
 
-from counterpartylib.lib import config
-from counterpartylib.lib import exceptions
-from counterpartylib.lib import util
-from counterpartylib.lib import script
-from counterpartylib.lib import backend
+from metronoteslib.lib import config
+from metronoteslib.lib import exceptions
+from metronoteslib.lib import util
+from metronoteslib.lib import script
+from metronoteslib.lib import backend
 
 # Constants
 OP_RETURN = b'\x6a'
@@ -458,7 +458,7 @@ def construct (db, tx_info, encoding='auto',
 
     '''Sanity Check'''
 
-    from counterpartylib.lib import blocks
+    from metronoteslib.lib import blocks
 
     # Desired transaction info.
     (desired_source, desired_destination_outputs, desired_data) = tx_info

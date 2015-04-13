@@ -32,28 +32,28 @@ import jsonrpc
 from jsonrpc import dispatcher
 import inspect
 
-from counterpartylib.lib import config
-from counterpartylib.lib import exceptions
-from counterpartylib.lib import util
-from counterpartylib.lib import check
-from counterpartylib.lib import backend
-from counterpartylib.lib import database
-from counterpartylib.lib import transaction
-from counterpartylib.lib import blocks
-from counterpartylib.lib import script
-from counterpartylib.lib.messages import send
-from counterpartylib.lib.messages import order
-from counterpartylib.lib.messages import btcpay
-from counterpartylib.lib.messages import issuance
-from counterpartylib.lib.messages import broadcast
-from counterpartylib.lib.messages import bet
-from counterpartylib.lib.messages import dividend
-from counterpartylib.lib.messages import burn
-from counterpartylib.lib.messages import cancel
-from counterpartylib.lib.messages import rps
-from counterpartylib.lib.messages import rpsresolve
-from counterpartylib.lib.messages import publish
-from counterpartylib.lib.messages import execute
+from metronoteslib.lib import config
+from metronoteslib.lib import exceptions
+from metronoteslib.lib import util
+from metronoteslib.lib import check
+from metronoteslib.lib import backend
+from metronoteslib.lib import database
+from metronoteslib.lib import transaction
+from metronoteslib.lib import blocks
+from metronoteslib.lib import script
+from metronoteslib.lib.messages import send
+from metronoteslib.lib.messages import order
+from metronoteslib.lib.messages import btcpay
+from metronoteslib.lib.messages import issuance
+from metronoteslib.lib.messages import broadcast
+from metronoteslib.lib.messages import bet
+from metronoteslib.lib.messages import dividend
+from metronoteslib.lib.messages import burn
+from metronoteslib.lib.messages import cancel
+from metronoteslib.lib.messages import rps
+from metronoteslib.lib.messages import rpsresolve
+from metronoteslib.lib.messages import publish
+from metronoteslib.lib.messages import execute
 
 API_TABLES = ['assets', 'balances', 'credits', 'debits', 'bets', 'bet_matches',
               'broadcasts', 'btcpays', 'burns', 'cancels',
@@ -263,7 +263,7 @@ def compose_transaction(db, name, params,
         if not script.is_fully_valid(binascii.unhexlify(pubkey)):
             raise script.AddressError('invalid public key: {}'.format(pubkey))
 
-    compose_method = sys.modules['counterpartylib.lib.messages.{}'.format(name)].compose
+    compose_method = sys.modules['metronoteslib.lib.messages.{}'.format(name)].compose
     compose_params = inspect.getargspec(compose_method)[0]
     missing_params = [p for p in compose_params if p not in params and p != 'db']
     for param in missing_params:
@@ -448,8 +448,8 @@ class APIServer(threading.Thread):
             return messages
 
         @dispatcher.add_method
-        def get_xcp_supply():
-            return util.xcp_supply(db)
+        def get_xmn_supply():
+            return util.xmn_supply(db)
 
         @dispatcher.add_method
         def get_asset_info(assets):
@@ -458,12 +458,12 @@ class APIServer(threading.Thread):
             assetsInfo = []
             for asset in assets:
 
-                # BTC and XCP.
-                if asset in [config.BTC, config.XCP]:
+                # BTC and XMN.
+                if asset in [config.BTC, config.XMN]:
                     if asset == config.BTC:
                         supply = backend.get_btc_supply(normalize=False)
                     else:
-                        supply = util.xcp_supply(db)
+                        supply = util.xmn_supply(db)
 
                     assetsInfo.append({
                         'asset': asset,

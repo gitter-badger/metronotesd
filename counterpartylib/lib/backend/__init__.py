@@ -12,15 +12,15 @@ import bitcoin as bitcoinlib
 import bitcoin.rpc as bitcoinlib_rpc
 from bitcoin.core import CBlock
 
-from counterpartylib.lib import util
-from counterpartylib.lib import script
-from counterpartylib.lib import config
-from counterpartylib.lib import exceptions
+from metronoteslib.lib import util
+from metronoteslib.lib import script
+from metronoteslib.lib import config
+from metronoteslib.lib import exceptions
 
-from counterpartylib.lib.backend import addrindex, btcd
+from metronoteslib.lib.backend import addrindex, btcd
 
 def BACKEND():
-    return sys.modules['counterpartylib.lib.backend.{}'.format(config.BACKEND_NAME)] 
+    return sys.modules['metronoteslib.lib.backend.{}'.format(config.BACKEND_NAME)] 
 
 # TODO: Generate this block of code dynamically?
 

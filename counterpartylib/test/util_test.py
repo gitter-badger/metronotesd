@@ -11,8 +11,8 @@ CURR_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.ex
 sys.path.append(os.path.normpath(os.path.join(CURR_DIR, '..')))
 
 import server
-from counterpartylib.lib import (config, api, util, exceptions, blocks, check, backend, database, transaction, script)
-from counterpartylib.lib.messages import (send, order, btcpay, issuance, broadcast, bet, dividend, burn, cancel, rps, rpsresolve)
+from metronoteslib.lib import (config, api, util, exceptions, blocks, check, backend, database, transaction, script)
+from metronoteslib.lib.messages import (send, order, btcpay, issuance, broadcast, bet, dividend, burn, cancel, rps, rpsresolve)
 
 from fixtures.params import DEFAULT_PARAMS as DP
 from fixtures.scenarios import UNITTEST_FIXTURE, INTEGRATION_SCENARIOS, standard_scenarios_params
@@ -207,7 +207,7 @@ def run_scenario(scenario, rawtransactions_db):
     raw_transactions = []
     for tx in scenario:
         if tx[0] != 'create_next_block':
-            module = sys.modules['counterpartylib.lib.messages.{}'.format(tx[0])]
+            module = sys.modules['metronoteslib.lib.messages.{}'.format(tx[0])]
             compose = getattr(module, 'compose')
             unsigned_tx_hex = transaction.construct(db, compose(db, *tx[1]), **tx[2])
             raw_transactions.append({tx[0]: unsigned_tx_hex})
@@ -253,9 +253,9 @@ def clean_scenario_dump(scenario_name, dump):
     dump = re.sub(',5430,10000,\'data\',1\)', ',0,10000,\'data\',1\)', dump)
     return dump
 
-def check_record(record, counterpartyd_db):
+def check_record(record, metronotesd_db):
     """Allow direct record access to the db."""
-    cursor = counterpartyd_db.cursor()
+    cursor = metronotesd_db.cursor()
 
     if record['table'] == 'pragma':
         field = record['field']
@@ -295,32 +295,32 @@ def vector_to_args(vector, functions=[]):
                     args.append((tx_name, method, params['in'], outputs, error, records))
     return args
 
-def exec_tested_method(tx_name, method, tested_method, inputs, counterpartyd_db):
+def exec_tested_method(tx_name, method, tested_method, inputs, metronotesd_db):
     """Execute tested_method within context and arguments."""
     if tx_name == 'transaction' and method == 'construct':
-        return tested_method(counterpartyd_db, inputs[0], **inputs[1])
+        return tested_method(metronotesd_db, inputs[0], **inputs[1])
     elif (tx_name == 'util' and (method == 'api' or method == 'date_passed' or method == 'price' or method == 'sortkeypicker' or method == 'generate_asset_id' \
          or method == 'generate_asset_name' or method == 'dhash_string' or method == 'enabled' or method == 'get_url' or method == 'hexlify')) or tx_name == 'script' \
         or (tx_name == 'blocks' and (method == 'get_tx_info' or method == 'get_tx_info1' or method == 'get_tx_info2')) or tx_name == 'transaction':
         return tested_method(*inputs)
     else:
-        return tested_method(counterpartyd_db, *inputs)
+        return tested_method(metronotesd_db, *inputs)
 
-def check_outputs(tx_name, method, inputs, outputs, error, records, counterpartyd_db):
+def check_outputs(tx_name, method, inputs, outputs, error, records, metronotesd_db):
     """Check actual and expected outputs of a particular function."""
 
     try:
-        tested_module = sys.modules['counterpartylib.lib.{}'.format(tx_name)]
+        tested_module = sys.modules['metronoteslib.lib.{}'.format(tx_name)]
     except KeyError:    # TODO: hack
-        tested_module = sys.modules['counterpartylib.lib.messages.{}'.format(tx_name)]
+        tested_module = sys.modules['metronoteslib.lib.messages.{}'.format(tx_name)]
     tested_method = getattr(tested_module, method)
 
     test_outputs = None
     if error is not None:
         with pytest.raises(error[0]) as exception:
-            test_outputs = exec_tested_method(tx_name, method, tested_method, inputs, counterpartyd_db)
+            test_outputs = exec_tested_method(tx_name, method, tested_method, inputs, metronotesd_db)
     else:
-        test_outputs = exec_tested_method(tx_name, method, tested_method, inputs, counterpartyd_db)
+        test_outputs = exec_tested_method(tx_name, method, tested_method, inputs, metronotesd_db)
         if pytest.config.option.gentxhex and method == 'compose':
             print('')
             tx_params = {
@@ -329,7 +329,7 @@ def check_outputs(tx_name, method, inputs, outputs, error, records, counterparty
             if tx_name == 'order' and inputs[1]=='BTC':
                 print('give btc')
                 tx_params['fee_provided'] = DP['fee_provided']
-            unsigned_tx_hex = transaction.construct(counterpartyd_db, test_outputs, **tx_params)
+            unsigned_tx_hex = transaction.construct(metronotesd_db, test_outputs, **tx_params)
             print(tx_name)
             print(unsigned_tx_hex)
 
@@ -339,7 +339,7 @@ def check_outputs(tx_name, method, inputs, outputs, error, records, counterparty
         assert str(exception.value) == error[1]
     if records is not None:
         for record in records:
-            check_record(record, counterpartyd_db)
+            check_record(record, metronotesd_db)
 
 def compare_strings(string1, string2):
     """Compare strings diff-style."""
@@ -385,7 +385,7 @@ def reparse(testnet=True):
     memory_db = database.get_connection(read_only=False)
     initialise_db(memory_db)
 
-    data_dir = appdirs.user_data_dir(appauthor=config.XCP_NAME, appname=config.APP_NAME, roaming=True)
+    data_dir = appdirs.user_data_dir(appauthor=config.XMN_NAME, appname=config.APP_NAME, roaming=True)
     prod_db_path = os.path.join(data_dir, '{}{}.db'.format(config.APP_NAME, '.testnet' if testnet else ''))
     prod_db = apsw.Connection(prod_db_path)
     prod_db.setrowtrace(database.rowtracer)

@@ -12,10 +12,10 @@ import pickle
 import math
 import fractions
 
-from counterpartylib.lib import util
-from counterpartylib.lib import config
-from counterpartylib.lib import script
-from counterpartylib.lib.messages.scriptlib import (rlp, utils, opcodes, blocks)
+from metronoteslib.lib import util
+from metronoteslib.lib import config
+from metronoteslib.lib import script
+from metronoteslib.lib.messages.scriptlib import (rlp, utils, opcodes, blocks)
 
 class PBLogger(object):
     def log(self, name, **kargs):
@@ -109,7 +109,7 @@ def apply_transaction(db, tx, block):
     if config.TESTNET:
         supply = 2600001 * config.UNIT
     else:
-        supply = util.xcp_supply(db)
+        supply = util.xmn_supply(db)
     MULTIPLIER = fractions.Fraction(supply, 2700000 * config.UNIT) * MULTIPLIER_CONSTANT_FACTOR
     for key in prices.keys():
         prices[key] = fractions.Fraction(prices[key]) * MULTIPLIER
@@ -624,7 +624,7 @@ def apply_op(db, block, tx, msg, processed_code, compustate):
             stk.append(0)
             compustate.gas = 0
     elif op == 'CALL':
-        # TODO: Check that this allows for the sending of XCP to Counterparty addresses, as well as contract addresses.
+        # TODO: Check that this allows for the sending of XMN to Metronotes addresses, as well as contract addresses.
         gas, to, value, meminstart, meminsz, memoutstart, memoutsz = \
             stk.pop(), stk.pop(), stk.pop(), stk.pop(), stk.pop(), stk.pop(), stk.pop()
         new_memsize = max(meminstart + meminsz, memoutstart + memoutsz)

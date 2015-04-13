@@ -1,7 +1,7 @@
 """
 Initialise database.
 
-Sieve blockchain for Counterparty transactions, and add them to the database.
+Sieve blockchain for Metronotes transactions, and add them to the database.
 """
 
 import os
@@ -21,14 +21,14 @@ import http
 
 import bitcoin as bitcoinlib
 
-from counterpartylib.lib import config
-from counterpartylib.lib import exceptions
-from counterpartylib.lib import util
-from counterpartylib.lib import check
-from counterpartylib.lib import script
-from counterpartylib.lib import backend
-from counterpartylib.lib import log
-from counterpartylib.lib import database
+from metronoteslib.lib import config
+from metronoteslib.lib import exceptions
+from metronoteslib.lib import util
+from metronoteslib.lib import check
+from metronoteslib.lib import script
+from metronoteslib.lib import backend
+from metronoteslib.lib import log
+from metronoteslib.lib import database
 from .messages import (send, order, btcpay, issuance, broadcast, bet, dividend, burn, cancel, rps, rpsresolve, publish, execute, destroy)
 
 from .kickstart.blocks_parser import BlockchainParser, ChainstateParser
@@ -304,7 +304,7 @@ def initialise(db):
     cursor.execute('''SELECT * FROM assets WHERE asset_name = ?''', ('BTC',))
     if not list(cursor):
         cursor.execute('''INSERT INTO assets VALUES (?,?,?)''', ('0', 'BTC', None))
-        cursor.execute('''INSERT INTO assets VALUES (?,?,?)''', ('1', 'XCP', None))
+        cursor.execute('''INSERT INTO assets VALUES (?,?,?)''', ('1', 'XMN', None))
 
     # Consolidated
     send.initialise(db)
@@ -1018,7 +1018,7 @@ def follow(db):
             else:
                 logger.debug('Initialising mempool.')
 
-            # Get old counterpartyd mempool.
+            # Get old metronotesd mempool.
             old_mempool = list(cursor.execute('''SELECT * FROM mempool'''))
             old_mempool_hashes = [message['tx_hash'] for message in old_mempool]
 
@@ -1033,7 +1033,7 @@ def follow(db):
             mempool = []
             for tx_hash in backend.getrawmempool():
 
-                # If already in counterpartyd mempool, copy to new one.
+                # If already in metronotesd mempool, copy to new one.
                 if tx_hash in old_mempool_hashes:
                     for message in old_mempool:
                         if message['tx_hash'] == tx_hash:
@@ -1076,7 +1076,7 @@ def follow(db):
                             else:
                                 # If a transaction hasn’t been added to the
                                 # table `transactions`, then it’s not a
-                                # Counterparty transaction.
+                                # Metronotes transaction.
                                 not_supported[tx_hash] = ''
                                 not_supported_sorted.append((block_index, tx_hash))
                                 raise MempoolError

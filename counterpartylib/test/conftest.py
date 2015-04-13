@@ -20,7 +20,7 @@ from fixtures.vectors import UNITTEST_VECTOR
 from fixtures.params import DEFAULT_PARAMS
 from fixtures.scenarios import INTEGRATION_SCENARIOS
 
-from counterpartylib.lib import config, util, backend, transaction
+from metronoteslib.lib import config, util, backend, transaction
 
 import bitcoin as bitcoinlib
 import bitcoin.rpc as bitcoinlib_rpc
@@ -114,13 +114,13 @@ def init_mock_functions(monkeypatch, rawtransactions_db):
 
     util.CURRENT_BLOCK_INDEX = DEFAULT_PARAMS['default_block'] - 1
 
-    monkeypatch.setattr('counterpartylib.lib.backend.get_unspent_txouts', get_unspent_txouts)
-    monkeypatch.setattr('counterpartylib.lib.log.isodt', isodt)
-    monkeypatch.setattr('counterpartylib.lib.log.curr_time', curr_time)
-    monkeypatch.setattr('counterpartylib.lib.util.date_passed', date_passed)
-    monkeypatch.setattr('counterpartylib.lib.api.init_api_access_log', init_api_access_log)
+    monkeypatch.setattr('metronoteslib.lib.backend.get_unspent_txouts', get_unspent_txouts)
+    monkeypatch.setattr('metronoteslib.lib.log.isodt', isodt)
+    monkeypatch.setattr('metronoteslib.lib.log.curr_time', curr_time)
+    monkeypatch.setattr('metronoteslib.lib.util.date_passed', date_passed)
+    monkeypatch.setattr('metronoteslib.lib.api.init_api_access_log', init_api_access_log)
     if hasattr(config, 'PREFIX'):
-        monkeypatch.setattr('counterpartylib.lib.config.PREFIX', b'TESTXXXX')
-    monkeypatch.setattr('counterpartylib.lib.backend.getrawtransaction', get_cached_raw_transaction)
-    monkeypatch.setattr('counterpartylib.lib.backend.pubkeyhash_to_pubkey', pubkeyhash_to_pubkey)
-    monkeypatch.setattr('counterpartylib.lib.backend.multisig_pubkeyhashes_to_pubkeys', multisig_pubkeyhashes_to_pubkeys)
+        monkeypatch.setattr('metronoteslib.lib.config.PREFIX', b'TESTXXXX')
+    monkeypatch.setattr('metronoteslib.lib.backend.getrawtransaction', get_cached_raw_transaction)
+    monkeypatch.setattr('metronoteslib.lib.backend.pubkeyhash_to_pubkey', pubkeyhash_to_pubkey)
+    monkeypatch.setattr('metronoteslib.lib.backend.multisig_pubkeyhashes_to_pubkeys', multisig_pubkeyhashes_to_pubkeys)

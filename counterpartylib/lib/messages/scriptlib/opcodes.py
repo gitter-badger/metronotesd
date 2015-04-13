@@ -68,7 +68,7 @@ opcodes = {
     0xff: ['SUICIDE', 1, 1, [], 0],
 }
 
-# TODO: Counterparty‐specific `OP_CODE`s
+# TODO: Metronotes‐specific `OP_CODE`s
     # balance‐check
     # send
     # CPBAL

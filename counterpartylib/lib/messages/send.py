@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 
-from counterpartylib.lib.messages.versions import send1
+from metronoteslib.lib.messages.versions import send1
 
 ID = send1.ID
 

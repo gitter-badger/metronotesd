@@ -1,13 +1,13 @@
-[![Build Status](https://travis-ci.org/CounterpartyXCP/counterpartyd.svg?branch=develop)](https://travis-ci.org/CounterpartyXCP/counterpartyd)
-[![Build Status](https://circleci.com/gh/CounterpartyXCP/counterpartyd.svg?&style=shield)](https://circleci.com/gh/CounterpartyXCP/counterpartyd)
-[![Coverage Status](https://coveralls.io/repos/CounterpartyXCP/counterpartyd/badge.png?branch=develop)](https://coveralls.io/r/CounterpartyXCP/counterpartyd?branch=develop)
-[![Latest Version](https://pypip.in/version/counterparty-lib/badge.svg)](https://pypi.python.org/pypi/counterparty-lib/)
-[![License](https://pypip.in/license/counterparty-lib/badge.svg)](https://pypi.python.org/pypi/counterparty-lib/)
-[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/CounterpartyXCP/General)
+[![Build Status](https://travis-ci.org/Metronotes/metronotesd.svg?branch=develop)](https://travis-ci.org/Metronotes/metronotesd)
+[![Build Status](https://circleci.com/gh/Metronotes/metronotesd.svg?&style=shield)](https://circleci.com/gh/Metronotes/metronotesd)
+[![Coverage Status](https://coveralls.io/repos/Metronotes/metronotesd/badge.png?branch=develop)](https://coveralls.io/r/Metronotes/metronotesd?branch=develop)
+[![Latest Version](https://pypip.in/version/metronotes-lib/badge.svg)](https://pypi.python.org/pypi/metronotes-lib/)
+[![License](https://pypip.in/license/metronotes-lib/badge.svg)](https://pypi.python.org/pypi/metronotes-lib/)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Metronotes/General)
 
 
 # Description
-`counterparty-lib` is the reference implementation of the [Counterparty Protocol](https://counterparty.io).
+`metronotes-lib` is the reference implementation of the [Metronotes Protocol](https://metronotes.io).
 
 
 # Requirements
@@ -27,8 +27,8 @@
 # Installation
 
 ```
-$ git clone https://github.com/CounterpartyXCP/counterpartyd.git
-$ cd counterpartyd
+$ git clone https://github.com/Metronotes/metronotesd.git
+$ cd metronotesd
 $ python3 setup.py install
 ```
 
@@ -37,7 +37,7 @@ $ python3 setup.py install
 
 ```
 $ python3
->>> from counterpartylib import server
+>>> from metronoteslib import server
 >>> db = server.initialise(<options>)
 >>> server.start_all(db)
 ```
@@ -45,4 +45,4 @@ $ python3
 
 # Further Reading
 
-* [Official Project Documentation](http://counterparty.io/docs/)
+* [Official Project Documentation](http://metronotes.io/docs/)

@@ -11,7 +11,7 @@ VERSION_REVISION = 4
 VERSION_STRING = str(VERSION_MAJOR) + '.' + str(VERSION_MINOR) + '.' + str(VERSION_REVISION)
 
 
-# Counterparty protocol
+# Metronotes protocol
 TXTYPE_FORMAT = '>I'
 
 TWO_WEEKS = 2 * 7 * 24 * 3600
@@ -31,11 +31,11 @@ OP_RETURN_MAX_SIZE = 40 # bytes
 
 # Currency agnosticism
 BTC = 'BTC'
-XCP = 'XCP'
+XMN = 'XMN'
 
 BTC_NAME = 'Bitcoin'
-XCP_NAME = 'Counterparty'
-APP_NAME = XCP_NAME.lower()
+XMN_NAME = 'Metronotes'
+APP_NAME = XMN_NAME.lower()
 
 DEFAULT_RPC_PORT_TESTNET = 14000
 DEFAULT_RPC_PORT = 4000
@@ -43,8 +43,8 @@ DEFAULT_RPC_PORT = 4000
 DEFAULT_BACKEND_PORT_TESTNET = 18332
 DEFAULT_BACKEND_PORT = 8332
 
-UNSPENDABLE_TESTNET = 'mvCounterpartyXXXXXXXXXXXXXXW24Hef'
-UNSPENDABLE_MAINNET = '1CounterpartyXXXXXXXXXXXXXXXUWLpVr'
+UNSPENDABLE_TESTNET = 'mvMetronotesXXXXXXXXXXXXXXW24Hef'
+UNSPENDABLE_MAINNET = '1MetronotesXXXXXXXXXXXXXXXUWLpVr'
 
 ADDRESSVERSION_TESTNET = b'\x6f'
 PRIVATEKEY_VERSION_TESTNET = b'\xef'
@@ -73,7 +73,7 @@ BURN_END_MAINNET = 283810
 
 
 # Protocol defaults
-# NOTE: If the DUST_SIZE constants are changed, they MUST also be changed in counterblockd/lib/config.py as well
+# NOTE: If the DUST_SIZE constants are changed, they MUST also be changed in metroblockd/lib/config.py as well
     # TODO: This should be updated, given their new configurability.
 # TODO: The dust values should be lowered by 90%, once transactions with smaller outputs start confirming faster: <https://github.com/mastercoin-MSC/spec/issues/192>
 DEFAULT_REGULAR_DUST_SIZE = 5430         # TODO: This is just a guess. I got it down to 5530 satoshis.

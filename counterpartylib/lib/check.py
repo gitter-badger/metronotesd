@@ -6,11 +6,11 @@ import warnings
 import time
 import sys
 
-from counterpartylib.lib import config
-from counterpartylib.lib import util
-from counterpartylib.lib import exceptions
-from counterpartylib.lib import backend
-from counterpartylib.lib import database
+from metronoteslib.lib import config
+from metronoteslib.lib import util
+from metronoteslib.lib import exceptions
+from metronoteslib.lib import backend
+from metronoteslib.lib import database
 
 CONSENSUS_HASH_SEED = 'We can only see a short distance ahead, but we can see plenty there that needs to be done.'
 
@@ -114,7 +114,7 @@ def check_change(protocol_change, change_name):
                 passed = False
 
     if not passed:
-        explanation = 'Your version of counterpartyd is v{}, but, as of block {}, the minimum version is v{}.{}.{}. Reason: ‘{}’. Please upgrade to the latest version and restart the server.'.format(
+        explanation = 'Your version of metronotesd is v{}, but, as of block {}, the minimum version is v{}.{}.{}. Reason: ‘{}’. Please upgrade to the latest version and restart the server.'.format(
             config.VERSION_STRING, protocol_change['block_index'], protocol_change['minimum_version_major'], protocol_change['minimum_version_minor'],
             protocol_change['minimum_version_revision'], change_name)
         if util.CURRENT_BLOCK_INDEX >= protocol_change['block_index']:
@@ -128,11 +128,11 @@ def software_version():
     logger.debug('Checking version.')
 
     try:
-        host = 'https://counterpartyxcp.github.io/counterparty-lib/protocol_changes.json'
+        host = 'https://metronotesxmn.github.io/metronotes-lib/protocol_changes.json'
         response = requests.get(host, headers={'cache-control': 'no-cache'})
         # TODO: Temporary
         if response.status_code != 200:
-            host = 'https://counterpartyxcp.github.io/counterpartyd/protocol_changes.json'  # Old Location
+            host = 'https://metronotesxmn.github.io/metronotesd/protocol_changes.json'  # Old Location
             response = requests.get(host, headers={'cache-control': 'no-cache'})
         versions = json.loads(response.text)
     except (requests.exceptions.ConnectionError, ConnectionRefusedError, ValueError):
@@ -159,9 +159,9 @@ def backend_state():
     logger.debug('Backend state check passed.')
 
 def database_state(db, blockcount):
-    """Checks {} database to see if is caught up with backend.""".format(config.XCP_NAME)
+    """Checks {} database to see if is caught up with backend.""".format(config.XMN_NAME)
     if util.CURRENT_BLOCK_INDEX + 1 < blockcount:
-        raise DatabaseError('{} database is behind backend.'.format(config.XCP_NAME))
+        raise DatabaseError('{} database is behind backend.'.format(config.XMN_NAME))
     logger.debug('Database state check passed.')
     return
 

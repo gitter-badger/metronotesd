@@ -5,9 +5,9 @@ import decimal
 D = decimal.Decimal
 from fractions import Fraction
 
-from counterpartylib.lib import (config, exceptions, util)
+from metronoteslib.lib import (config, exceptions, util)
 
-"""Burn {} to earn {} during a special period of time.""".format(config.BTC, config.XCP)
+"""Burn {} to earn {} during a special period of time.""".format(config.BTC, config.XMN)
 
 ID = 60
 
@@ -82,7 +82,7 @@ def parse (db, tx, MAINNET_BURNS, message=None):
                 sent = 0
 
         if status == 'valid':
-            # Calculate quantity of XCP earned. (Maximum 1 BTC in total, ever.)
+            # Calculate quantity of XMN earned. (Maximum 1 BTC in total, ever.)
             cursor = db.cursor()
             cursor.execute('''SELECT * FROM burns WHERE (status = ? AND source = ?)''', ('valid', tx['source']))
             burns = cursor.fetchall()
@@ -97,8 +97,8 @@ def parse (db, tx, MAINNET_BURNS, message=None):
             multiplier = (1000 + (500 * Fraction(partial_time, total_time)))
             earned = round(burned * multiplier)
 
-            # Credit source address with earned XCP.
-            util.credit(db, tx['source'], config.XCP, earned, action='burn', event=tx['tx_hash'])
+            # Credit source address with earned XMN.
+            util.credit(db, tx['source'], config.XMN, earned, action='burn', event=tx['tx_hash'])
         else:
             burned = 0
             earned = 0
@@ -116,7 +116,7 @@ def parse (db, tx, MAINNET_BURNS, message=None):
         except KeyError:
             return
 
-        util.credit(db, line['source'], config.XCP, int(line['earned']), action='burn', event=line['tx_hash'])
+        util.credit(db, line['source'], config.XMN, int(line['earned']), action='burn', event=line['tx_hash'])
 
         tx_index = tx['tx_index']
         tx_hash = line['tx_hash']

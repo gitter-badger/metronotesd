@@ -4,10 +4,10 @@ logger = logging.getLogger(__name__)
 import time
 
 
-from counterpartylib.lib import config
-from counterpartylib.lib import util
-from counterpartylib.lib import exceptions
-from counterpartylib.lib import log
+from metronoteslib.lib import config
+from metronoteslib.lib import util
+from metronoteslib.lib import exceptions
+from metronoteslib.lib import log
 
 def rowtracer(cursor, sql):
     """Converts fetched SQL data into dict-style"""

@@ -9,11 +9,11 @@ D = decimal.Decimal
 import logging
 logger = logging.getLogger(__name__)
 
-from counterpartylib.lib import config
-from counterpartylib.lib import exceptions
-from counterpartylib.lib import util
-from counterpartylib.lib import backend
-from counterpartylib.lib import log
+from metronoteslib.lib import config
+from metronoteslib.lib import exceptions
+from metronoteslib.lib import util
+from metronoteslib.lib import backend
+from metronoteslib.lib import log
 
 FORMAT = '>QQQQHQ'
 LENGTH = 8 + 8 + 8 + 8 + 2 + 8
@@ -354,10 +354,10 @@ def validate (db, source, give_asset, give_quantity, get_asset, get_quantity, ex
     if not give_quantity or not get_quantity:
         problems.append('zero give or zero get')
     cursor.execute('select * from issuances where (status = ? and asset = ?)', ('valid', give_asset))
-    if give_asset not in (config.BTC, config.XCP) and not cursor.fetchall():
+    if give_asset not in (config.BTC, config.XMN) and not cursor.fetchall():
         problems.append('no such asset to give ({})'.format(give_asset))
     cursor.execute('select * from issuances where (status = ? and asset = ?)', ('valid', get_asset))
-    if get_asset not in (config.BTC, config.XCP) and not cursor.fetchall():
+    if get_asset not in (config.BTC, config.XMN) and not cursor.fetchall():
         problems.append('no such asset to get ({})'.format(get_asset))
     if expiration > config.MAX_EXPIRATION:
         problems.append('expiration overflow')

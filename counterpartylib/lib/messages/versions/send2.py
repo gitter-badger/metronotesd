@@ -4,14 +4,14 @@
 
 import struct
 
-from counterpartylib.lib import util
-from counterpartylib.lib import config
-from counterpartylib.lib.script import AddressError
-from counterpartylib.lib.exceptions import ValidateError
-from counterpartylib.lib.exceptions import UnpackError
-from counterpartylib.lib.exceptions import AssetError
-from counterpartylib.lib.exceptions import AssetNameError
-from counterpartylib.lib.exceptions import BalanceError
+from metronoteslib.lib import util
+from metronoteslib.lib import config
+from metronoteslib.lib.script import AddressError
+from metronoteslib.lib.exceptions import ValidateError
+from metronoteslib.lib.exceptions import UnpackError
+from metronoteslib.lib.exceptions import AssetError
+from metronoteslib.lib.exceptions import AssetNameError
+from metronoteslib.lib.exceptions import BalanceError
 
 FORMAT = '>QQ'
 LENGTH = 8 + 8

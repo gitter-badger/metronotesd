@@ -11,7 +11,7 @@
 - Tag and Sign Release
 - Merge branch into both `master` and `develop`
 - Rebase `gh-pages` to `master`
-- Write [Release Notes](https://github.com/CounterpartyXCP/counterpartyd/releases)
+- Write [Release Notes](https://github.com/Metronotes/metronotesd/releases)
 - Upload (signed) package to PyPi
 	* `sudo python3 setup.py sdist build`
 	<!-- * `sudo python3 setup.py bdist_wheel build`	# Does not work with `apsw` and `ethereum-serpent` installs. -->
@@ -19,6 +19,6 @@
 
 **@ivanazuber:**:
 
-- Post to [Official Forums](https://forums.counterparty.io/discussion/445/new-version-announcements-counterparty-and-counterpartyd), Skype, [Gitter](https://gitter.im/CounterpartyXCP)
+- Post to [Official Forums](https://forums.metronotes.io/discussion/445/new-version-announcements-metronotes-and-metronotesd), Skype, [Gitter](https://gitter.im/Metronotes)
 - Post to social media
 - SMS and mailing list notifications

@@ -1,7 +1,7 @@
 ## Client Versions ##
 * v9.49.4 (2014-02-05)
 	* reconceived this package as a libary
-	* moved CLI to new repository: `counterparty-cli`
+	* moved CLI to new repository: `metronotes-cli`
 	* remove signing and broadcast functionality from API (`do_*`, `sign_tx`, `broadcast_tx` calls)
 	* created `setup.py` build script
 	* return to using `requests` for handling connections to backend
@@ -9,14 +9,14 @@
 	* renamed configuration parameter: `jmcorgan` -> `addrindex`
 	* renamed configuration parameter: `BACKEND_RPC_*` -> `BACKEND_*`
 	* renamed configuration parameter: `BLOCKCHAIN_SERVICE_NAME` -> `BACKEND_NAME`
-	* prepared version check for repository rename to `counterparty-lib`
+	* prepared version check for repository rename to `metronotes-lib`
 	* moved API docs to wiki
 	* improved test coverage
 	* miscellaneous bug fixes
 	* improved docstring coverage
 	* removed option to use Insight, Blockr and SoChain as a backend
 	* tweaked Coveralls configuration
-	* Rename the database file name from `counterpartyd.9.db` to `counterparty.db`
+	* Rename the database file name from `metronotesd.9.db` to `metronotes.db`
 	* Add BTCD support
 * v9.49.3 (2014-12-28)
 	* better logging when handling `SIGTERM`, `SIGKILL`
@@ -75,7 +75,7 @@
 	* bump versions of dependencies
 	* miscellaneous clean up
 * v9.45.0 (2014-10-23)
-	* add dividend fee of 0.0002 XCP per recipient (protocol change: 330000)
+	* add dividend fee of 0.0002 XMN per recipient (protocol change: 330000)
 * v9.44.0 (2014-09-22)
 	* server action requires `server` positional argument
 	* lockfile
@@ -85,12 +85,12 @@
 * v9.43.0 (2014-09-14)
 	* generate movements hash for each block (start at block: 322000)
 * v9.42.0 (2014-09-04)
-	* disable dividends to XCP holders (protocol change: 320000)
+	* disable dividends to XMN holders (protocol change: 320000)
 	* allow dividends only from issuers (protocol change: 320000)
 * v9.41.0 (2014-08-21)
 	* fixed bug in new text and descriptions
 * v9.40.0 (2014-08-20)
-	* allow dividends to be paid to XCP holders (protocol change: 317500)
+	* allow dividends to be paid to XMN holders (protocol change: 317500)
 	* fixed bug in BTCpay validation
 	* allow null expirations (protocol change: 317500)
 	* assert first block in database is BLOCK_FIRST
@@ -109,7 +109,7 @@
 * v9.34.0 (2014-07-24)
 	* CFDs temporarily disabled
 * v9.33.1 (2014-07-23)
-	* moved Armory support to Counterwallet (allow use of uncompressed keys)
+	* moved Armory support to Metrowallet (allow use of uncompressed keys)
 	* improved performance of mempool population
 	* new ‘blockchain’ backend
 * v9.33.0 (2014-07-18)
@@ -178,7 +178,7 @@
 	* tweaked test suite
 	* fixed failed sanity check on testnet
 * v9.17.0
-	* failed XCP conservation sanity check on testnet (deadline checking in bets)
+	* failed XMN conservation sanity check on testnet (deadline checking in bets)
 * v9.16.3
 	* bug fixes
 * v9.16.2
@@ -242,7 +242,7 @@
 * arbitrary spend with multi‐sig input: retroactive
 * deduct `fee_required`, too: 287800
 * value, quantity, etc. sanity checking: retroactive
-* reduce issuance fee to 0.5 XCP: 291700
+* reduce issuance fee to 0.5 XMN: 291700
 * match only with positive get/counterwager remaining: 292000
 * pay‐to‐pubkeyhash encoding: 293000
 * filtered negative order fees: 294000

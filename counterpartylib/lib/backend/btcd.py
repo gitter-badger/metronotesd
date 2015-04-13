@@ -3,8 +3,8 @@ logger = logging.getLogger(__name__)
 import sys
 import json
 
-from counterpartylib.lib import script
-from counterpartylib.lib import config
+from metronoteslib.lib import script
+from metronoteslib.lib import config
 
 import requests
 import time

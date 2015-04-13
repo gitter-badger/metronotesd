@@ -2,8 +2,8 @@
 
 """Based on pyethereum <https://github.com/ethereum/pyethereum>."""
 
-from counterpartylib.lib import util
-from counterpartylib.lib.messages.scriptlib import rlp
+from metronoteslib.lib import util
+from metronoteslib.lib.messages.scriptlib import rlp
 
 import hashlib, binascii
 

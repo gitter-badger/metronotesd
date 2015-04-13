@@ -1,7 +1,7 @@
 # Security Issues
 
 * If you’ve identified a potential **security issue**, please contact us
-  directly at <support@counterparty.io>.
+  directly at <support@metronotes.io>.
 
 
 # Reporting an Issue
@@ -27,5 +27,5 @@
 * Commits should be organized into logical units.
 
 * Verify that your fork passes all tests. The test suite is invoked with `$
-  py.test-3.4` in the `counterpartylib` directory of the repository. The
+  py.test-3.4` in the `metronoteslib` directory of the repository. The
 `ethereum-serpent` dependency is satisfied by running `setup.py install --with-serpent`

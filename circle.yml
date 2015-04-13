@@ -3,11 +3,11 @@ dependencies:
         - python setup.py install --with-serpent
 test:
     override:
-        - cd counterpartylib; py.test --verbose --capture=no --cov-config=../.coveragerc --cov-report=term-missing --cov=./
+        - cd metronoteslib; py.test --verbose --capture=no --cov-config=../.coveragerc --cov-report=term-missing --cov=./
 machine:
     pre:
-        - mkdir -p ~/.local/share/counterparty
-        - cd ~/.local/share/counterparty; wget https://s3.amazonaws.com/counterparty-bootstrap/counterpartyd-db.latest.tar.gz; tar xvzf counterpartyd-db.latest.tar.gz; mv counterpartyd.9.db counterparty.db
-        - cd ~/.local/share/counterparty; wget https://s3.amazonaws.com/counterparty-bootstrap/counterpartyd-testnet-db.latest.tar.gz; tar xvzf counterpartyd-testnet-db.latest.tar.gz; mv counterpartyd.9.testnet.db counterparty.testnet.db
+        - mkdir -p ~/.local/share/metronotes
+        - cd ~/.local/share/metronotes; wget https://s3.amazonaws.com/metronotes-bootstrap/metronotesd-db.latest.tar.gz; tar xvzf metronotesd-db.latest.tar.gz; mv metronotesd.9.db metronotes.db
+        - cd ~/.local/share/metronotes; wget https://s3.amazonaws.com/metronotes-bootstrap/metronotesd-testnet-db.latest.tar.gz; tar xvzf metronotesd-testnet-db.latest.tar.gz; mv metronotesd.9.testnet.db metronotes.testnet.db
     python:
         version: 3.4.1

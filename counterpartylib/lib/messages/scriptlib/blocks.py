@@ -2,11 +2,11 @@
 
 """Based on pyethereum <https://github.com/ethereum/pyethereum>."""
 
-from counterpartylib.lib import util
-from counterpartylib.lib import config
-from counterpartylib.lib import log
-from counterpartylib.lib.messages.scriptlib import rlp
-from counterpartylib.lib.messages.scriptlib import utils
+from metronoteslib.lib import util
+from metronoteslib.lib import config
+from metronoteslib.lib import log
+from metronoteslib.lib.messages.scriptlib import rlp
+from metronoteslib.lib.messages.scriptlib import utils
 
 import logging
 logger = logging.getLogger(__name__)
@@ -160,10 +160,10 @@ class Block(object):
         nonce = Block.get_nonce(self, address)
         Block.set_nonce(self, address, nonce - 1)
 
-    def get_balance(self, address, asset=config.XCP):
+    def get_balance(self, address, asset=config.XMN):
         return util.get_balance(self.db, address, asset)
 
-    def transfer_value(self, tx, source, destination, quantity, asset=config.XCP):
+    def transfer_value(self, tx, source, destination, quantity, asset=config.XMN):
         if source:
             util.debit(self.db, source, asset, quantity, action='transfer value', event=tx.tx_hash)
         if destination:
