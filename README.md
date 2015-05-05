@@ -7,6 +7,8 @@
 
 
 # Description
+
+[![Join the chat at https://gitter.im/Metronotes/metronotesd](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Metronotes/metronotesd?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 `metronotes-lib` is the reference implementation of the [Metronotes Protocol](https://metronotes.io).
 
 
